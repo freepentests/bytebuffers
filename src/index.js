@@ -13,6 +13,14 @@ export default class ByteBuffer {
 		return bb && bb.__isByteBuffer__; 
 	}
 
+	static accessor() {
+		return DataView; // this is the only one thats supported so i would like to create a property rather than a method to get the accessor, but i want this to be backwards compatible with bytebuffer.js
+	}
+
+	static type() {
+		return ArrayBuffer; 
+	}
+
 	static fromBinary(binary, littleEndian) {
 		if (binary instanceof Uint8Array || binary instanceof Uint8ClampedArray) binary = binary.buffer;
 		const bb = new ByteBuffer(binary.byteLength, littleEndian);
@@ -78,6 +86,10 @@ export default class ByteBuffer {
 			default:
 				throw new TypeError(`Unrecognized encoding type: ${encoding}`);
 		}
+	}
+
+	static allocate(capacity, littleEndian) {
+		return new ByteBuffer(capacity, littleEndian);
 	}
 
 	constructor(capacity, littleEndian) {
