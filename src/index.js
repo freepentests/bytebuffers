@@ -25,82 +25,6 @@ export default class ByteBuffer {
 		this.markedOffset = -1;
 	}
 
-	writeInt8(number) {
-		this.view.setInt8(this.offset++, number, this.littleEndian);
-		return this;
-	}
-
-	writeUint8(number) {
-		this.view.setUint8(this.offset++, number, this.littleEndian);
-		return this;
-	}
-
-	readUint8() {
-		const number = this.view.getUint8(this.offset++, this.littleEndian);
-		return number;
-	}
-
-	readInt8() {
-		const number = this.view.getInt8(this.offset++, this.littleEndian);
-		return number;
-	}
-
-	writeInt16(number) {
-		this.view.setInt16(this.offset, number, this.littleEndian);
-		this.offset += 2;
-
-		return this;
-	}
-
-	writeUint16(number) {
-		this.view.setUint16(this.offset, number, this.littleEndian);
-		this.offset += 2;
-
-		return this;
-	}
-
-	readInt16() {
-		const number = this.view.getInt16(this.offset++, this.littleEndian);
-		this.offset += 2;
-
-		return number;
-	}
-
-	readUint16() {
-		const number = this.view.getUint16(this.offset, this.littleEndian);
-		this.offset += 2;
-
-		return number;
-	}
-
-	writeInt32(number) {
-		this.view.setInt32(this.offset, number, this.littleEndian);
-		this.offset += 4;
-
-		return this;
-	}
-
-	writeUint32(number) {
-		this.view.setUint32(this.offset, number, this.littleEndian);
-		this.offset += 4;
-
-		return this;
-	}
-
-	readInt32() {
-		const number = this.view.getInt32(this.offset++, this.littleEndian);
-		this.offset += 4;
-
-		return number;
-	}
-
-	readUint32() {
-		const number = this.view.getUint32(this.offset, this.littleEndian);
-		this.offset += 4;
-
-		return number;
-	}
-
 	static calculateUTF8Bytes(string) {
 		const stringContents = new TextEncoder().encode(string);
 		return stringContents.length;
@@ -232,20 +156,6 @@ export default class ByteBuffer {
 		}
 
 		return this;
-	}
-
-	writeUint64(number) {
-		this.view.writeBigUint64(this.offset, BigInt(number), this.littleEndian);
-		this.offset += 8;
-
-		return this;
-	}
-
-	readUint64() {
-		const bigInt = this.view.getBigUint64(this.offset, this.littleEndian)
-		this.offset += 8;
-
-		return Number(bigInt);
 	}
 }
 
