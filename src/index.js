@@ -111,12 +111,41 @@ export default class ByteBuffer {
 	resize(capacity) {
 		this.#capacity = capacity;
 
-		const newBuffer = new ArrayBuffer(this.#capacity);
+		const typedArray = new Uint8Array(new ArrayBuffer(this.#capacity));
+		typedArray.set(this.buffer);
 
+		this.buffer = typedArray.buffer;
+		this.view = new DataView(this.buffer);
+
+		return this;
 	}
 
-	toString() {
-		return 'lol';
+	reverse() {
+		const typedArray = new Uint8Array(this.buffer);
+		const newTypedArray = new Uint8Array(typedArray.length);
+
+		for (let i = 0; i < typedArray.length; i++) {
+			newTypedArray[typedArray.length - i] = typedArray[i];
+		}
+
+		this.buffer = newTypedArray.buffer;
+
+		return this;
+	}
+
+	skip(places) {
+		this.offset += places;
+		return this;
+	}
+
+	toBuffer(forceCopy) {
+		if (forceCopy) {
+			const typedArray = new Uint8Array(this.buffer.byteLength);
+			typedArray.set(new Uint8Array(this.buffer));
+			return typedArray.buffer;
+		}
+
+		return this.buffer.slice(this.offset, this.limit);
 	}
 
 	slice(beginning, end) {
