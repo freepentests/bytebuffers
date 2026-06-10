@@ -29,34 +29,6 @@ export default class ByteBuffer {
 		const stringContents = new TextEncoder().encode(string);
 		return stringContents.length;
 	}
-	
-	writeFloat32(number) {
-		this.float.setFloat32(this.offset, number, this.littleEndian);
-		this.offset += 4;
-
-		return this;
-	}
-
-	writeFloat64(number) {
-		this.float.setFloat64(this.offset, number, this.littleEndian);
-		this.offset += 8;
-
-		return this;
-	}
-
-	readFloat32() {
-		const number = this.view.getFloat32(this.offset, this.littleEndian);
-		this.offset += 4;
-
-		return number;
-	}
-
-	readFloat64() {
-		const number = this.view.getFloat64(this.offset, this.littleEndian);
-		this.offset += 8;
-
-		return number;
-	}
 
 	writeIString(string) {
 		this.writeUint32(string.length);
@@ -84,34 +56,6 @@ export default class ByteBuffer {
 		stringContents.forEach(charCode => {
 			this.writeUint8(charCode);
 		});
-
-		return this;
-	}
-
-	static zigZagEncode32(number) {
-		// https://lemire.me/blog/2022/11/25/making-all-your-integers-positive-with-zigzag-encoding/
-		return (Math.abs(number) * 2) + (number < 0 ? -1 : 0);
-	}
-
-	static zigZagDecode32(number) {
-		const isEven = number % 2 === 0;
-		return isEven ? (number / 2) : -(number + 1) / 2;
-	}
-
-	writeVarint32(number) {
-		// https://dev.to/lukaszwojcikdev/base128-algorithm-tool-for-encoding-and-decoding-text-data-34ld
-		while (number) {
-			let byte = number & 0x7F
-			number >>>= 7;
-			if (number !== 0) byte |= 0x80;
-			this.writeUint8(byte);
-		} 
-
-		return this;
-	}
-
-	writeVarint32ZigZag(number) {
-		this.writeVarint32(ByteBuffer.zigZagEncode32(number));
 
 		return this;
 	}
