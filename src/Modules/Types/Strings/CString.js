@@ -8,10 +8,12 @@ export default class CString {
 
 	readCString() {
 		const bytes = [];
-		let byte;
 
-		while ((a = this.readUint8()) !== 0) {
-			bytes.push(byte);
+		while (true) {
+			const byte = this.readUint8();
+
+			if (byte !== 0) bytes.push(byte);
+			else break;
 		}
 
 		return new TextDecoder().decode(new Uint8Array(bytes));

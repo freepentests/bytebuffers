@@ -21,6 +21,21 @@ export default class Varint {
 		return this;
 	}
 
+	readVarint() {
+		let number = 0;
+		let shift = 0;
+
+		while (true) {
+			const byte = this.readUint8();
+			number += (byte & 0x7F) << shift;
+			shift += 7;
+
+			if (byte & 0x80) break;
+		}
+
+		return number;
+	}
+
 	writeVarintZigZag(number) {
 		this.writeVarint(Varint.zigZagEncode32(number));
 

@@ -20,5 +20,18 @@ export default class BitSet {
 
 		return this;
 	}
+
+	readBitSet() {
+		let bitSet = [];
+
+		const length = this.readVarint();
+
+		while (true) {
+			const byte = this.readUint8();
+			const bits
+		}
+
+		return bitSet;
+	}
 }
 
