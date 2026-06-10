@@ -191,6 +191,16 @@ export default class ByteBuffer {
 
 		return this;
 	}
+
+	clone() {
+	}
+
+	slice() {
+	}
+
+	readBytes(length, offset) {
+		return this.slice(offset, offset + length); // gotta implement slice later
+	}
 }
 
 ByteBuffer.prototype.__isByteBuffer__ = true;
