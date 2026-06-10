@@ -193,20 +193,25 @@ export default class ByteBuffer {
 	}
 
 	clone() {
+		const bb = new ByteBuffer(this.capacity, this.littleEndian);
+		bb.buffer = this.buffer;
+		bb.view = this.view;
+
+		return bb;
 	}
 
-	slice() {
+	slice(beginning, end) {
+		const bb = this.clone();
+		bb.offset = beginning ?? this.offse;
+		bb.limit = end ?? this.limit;
+
+		return bb;
 	}
 
 	readBytes(length, offset) {
-		return this.slice(offset, offset + length); // gotta implement slice later
+		return this.slice(offset, offset + length); 
 	}
 }
 
 ByteBuffer.prototype.__isByteBuffer__ = true;
-
-ByteBuffer.prototype.writeUInt8 = ByteBuffer.prototype.writeUint8;
-ByteBuffer.prototype.readUInt8 = ByteBuffer.prototype.readUint8;
-ByteBuffer.prototype.writeByte = ByteBuffer.prototype.writeUint8;
-ByteBuffer.prototype.readByte = ByteBuffer.prototype.readUint8;
 
