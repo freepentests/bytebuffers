@@ -12,5 +12,12 @@ export default class UTF8String {
 
 		return this;
 	}
+
+	readUTF8String(length) {
+		const string = this.buffer.slice(this.offset, this.offset + length)
+		this.offset += length;
+
+		return new TextDecoder().decode(new Uint8Array(string));
+	}
 }
 

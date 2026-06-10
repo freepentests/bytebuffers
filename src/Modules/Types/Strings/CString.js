@@ -5,5 +5,16 @@ export default class CString {
 
 		return this;
 	}
+
+	readCString() {
+		const bytes = [];
+		let byte;
+
+		while ((a = this.readUint8()) !== 0) {
+			bytes.push(byte);
+		}
+
+		return new TextDecoder().decode(new Uint8Array(bytes));
+	}
 }
 

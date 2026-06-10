@@ -5,5 +5,10 @@ export default class IString {
 
 		return this;
 	}
+
+	readIString() {
+		const length = this.readUint32;
+		return this.readUTF8String(length);
+	}
 }
 
