@@ -12,6 +12,43 @@ export default class ByteBuffer {
 		return bb && bb.__isByteBuffer__; 
 	}
 
+	static fromBinary(binary, littleEndian) {
+		if (binary instanceof Uint8Array || binary instanceof Uint8ClampedArray) binary = binary.buffer;
+		const bb = new ByteBuffer(binary.byteLength, littleEndian);
+		bb.buffer = binary;
+		bb.view = new DataView(binary);
+
+		return bb;
+	}
+
+	static fromHex(value, littleEndian) {
+		if (value.length % 2 !== 0) throw new Error('Hex string length mismatch; expected multiple of 2');
+
+		const splitHexStringIntoTwoCharacterPairs = (string) => {
+			if (string.length === 2) return string;
+
+			return [
+				string.slice(0, 2),
+				splitHexStringIntoTwoCharacterPairs(string.slice(2))
+			];
+		};
+	}
+
+	static wrap(value, encoding, littleEndian) {
+		if (typeof encoding !== 'string') throw new Error(`encoding must be of type string, got ${typeof encoding}`);
+
+		switch (encoding) {
+			case 'binary':
+				return ByteBuffer.fromBinary(value, littleEndian);
+
+			case 'hex':
+				return ByteBuffer.fromHex(value, littleEndian);
+
+			default:
+				throw new TypeError(`Unrecognized encoding type: ${encoding}`);
+		}
+	}
+
 	constructor(capacity, littleEndian) {
 		this.#capacity = capacity ?? ByteBuffer.DEFAULT_CAPACITY;
 
