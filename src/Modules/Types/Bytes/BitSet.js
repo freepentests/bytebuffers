@@ -22,13 +22,29 @@ export default class BitSet {
 	}
 
 	readBitSet() {
-		let bitSet = [];
-
 		const length = this.readVarint();
-
-		while (true) {
+		const lengthInBytes = length / 8;
+		let bitSet = new Array(length);
+		let numBits = 0;
+	
+		while (numBits / 8 < lengthInBytes) {
 			const byte = this.readUint8();
-			const bits
+			bitSet[numBits++] = Boolean(byte & 1);
+			bitSet[numBits++] = Boolean(byte & 1 << 1);
+			bitSet[numBits++] = Boolean(byte & 1 << 2);
+			bitSet[numBits++] = Boolean(byte & 1 << 3);
+			bitSet[numBits++] = Boolean(byte & 1 << 4);
+			bitSet[numBits++] = Boolean(byte & 1 << 5);
+			bitSet[numBits++] = Boolean(byte & 1 << 6);
+			bitSet[numBits++] = Boolean(byte & 1 << 7);
+		}
+
+		if (numBits > length) {
+			const numBitsOverflowed = numBits % length;
+
+			for (let i = 0; i < numBitsOverflowed; i++) {
+				bitSet.pop();
+			}
 		}
 
 		return bitSet;
