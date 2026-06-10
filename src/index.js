@@ -2,6 +2,7 @@ export default class ByteBuffer {
 	#capacity;
 
 	static DEFAULT_CAPACITY = 16;
+	static MAX_VARINT64_BYTES = 10;
 	static MAX_VARINT32_BYTES = 5;
 	static DEFAULT_ENDIAN = false;
 	static BIG_ENDIAN = false; // a constant that can be used instead of the boolean value when instantiating a new ByteBuffer
@@ -135,6 +136,13 @@ export default class ByteBuffer {
 
 	writeIString(string) {
 		this.writeUint32(string.length);
+		this.writeUTF8String(string);
+
+		return this;
+	}
+
+	writeVString(string) {
+		this.writeVarint32(string.length);
 		this.writeUTF8String(string);
 
 		return this;
