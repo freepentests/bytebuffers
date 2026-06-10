@@ -25,13 +25,19 @@ export default class ByteBuffer {
 		if (value.length % 2 !== 0) throw new Error('Hex string length mismatch; expected multiple of 2');
 
 		const splitHexStringIntoTwoCharacterPairs = (string) => {
-			if (string.length === 2) return string;
+			if (string.length === 2) return [string];
 
 			return [
 				string.slice(0, 2),
-				splitHexStringIntoTwoCharacterPairs(string.slice(2))
+				...splitHexStringIntoTwoCharacterPairs(string.slice(2))
 			];
 		};
+
+		const splitted = splitHexStringIntoTwoCharacterPairs(value);
+
+		const buffer = new Uint8Array(splitted.map(hexByte => parseInt(hexByte, 16))).buffer;
+
+		return ByteBuffer.fromBinary(buffer, littleEndian);
 	}
 
 	static wrap(value, encoding, littleEndian) {
@@ -43,6 +49,8 @@ export default class ByteBuffer {
 
 			case 'hex':
 				return ByteBuffer.fromHex(value, littleEndian);
+
+			case '':
 
 			default:
 				throw new TypeError(`Unrecognized encoding type: ${encoding}`);
