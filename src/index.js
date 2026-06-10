@@ -25,17 +25,103 @@ export default class ByteBuffer {
 		this.markedOffset = -1;
 	}
 
+	flip() {
+		this.limit = this.offset;
+		this.offset = 0;
+
+		return this;
+	}
+
+	clear() {
+		this.limit = this.#capacity;
+		this.markedOffset = -1;
+		this.offset = 0;
+		
+		return this;
+	}
+
+	capacity() {
+		return this.#capacity;
+	}
+
+	compact() {
+		// implement later
+
+		return this;
+	}
+
 	clone() {
-		const bb = new ByteBuffer(this.capacity, this.littleEndian);
+		const bb = new ByteBuffer(this.#capacity, this.littleEndian);
 		bb.buffer = this.buffer;
 		bb.view = this.view;
 
 		return bb;
 	}
 
+	fill(value, beginning, end) {
+		beginning = beginning ?? this.offset;
+		end = end ?? this.limit;
+
+		if (value && typeof value === 'string') value = value.charCodeAt(0);
+
+		for (let i = beginning; i < end; i++) this.view.setUint8(i, value);
+
+		return this;
+	}
+
+	mark(offset) {
+		offset = offset ?? this.offset;
+		this.markedOffset = offset;
+
+		return this;
+	}
+
+	order(littleEndian) {
+		this.littleEndian = Boolean(littleEndian); 
+		return this;
+	}
+
+	LE(littleEndian) {
+		this.littleEndian = typeof littleEndian !== 'undefined' ? Boolean(littleEndian) : false;
+
+		return this;
+	}
+
+	BE(bigEndian) {
+		this.littleEndian = typeof bigEndian !== 'undefined' ? !bigEndian : false;
+
+		return this;
+	}
+
+	remaining() {
+		return this.limit - this.offset;
+	}
+
+	reset() {
+		if (this.markedOffset !== -1) {
+			this.offset = this.markedOffset;
+			this.markedOffset = -1;
+		} else {
+			this.offset = 0;
+		}
+
+		return this;
+	}
+
+	resize(capacity) {
+		this.#capacity = capacity;
+
+		const newBuffer = new ArrayBuffer(this.#capacity);
+
+	}
+
+	toString() {
+		return 'lol';
+	}
+
 	slice(beginning, end) {
 		const bb = this.clone();
-		bb.offset = beginning ?? this.offse;
+		bb.offset = beginning ?? this.offset;
 		bb.limit = end ?? this.limit;
 
 		return bb;
