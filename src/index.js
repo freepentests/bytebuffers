@@ -233,6 +233,20 @@ export default class ByteBuffer {
 
 		return this;
 	}
+
+	writeUint64(number) {
+		this.view.writeBigUint64(this.offset, BigInt(number), this.littleEndian);
+		this.offset += 8;
+
+		return this;
+	}
+
+	readUint64() {
+		const bigInt = this.view.getBigUint64(this.offset, this.littleEndian)
+		this.offset += 8;
+
+		return Number(bigInt);
+	}
 }
 
 ByteBuffer.prototype.__isByteBuffer__ = true;
