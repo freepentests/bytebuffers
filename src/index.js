@@ -1,5 +1,6 @@
 export default class ByteBuffer {
 	#capacity;
+	__isByteBuffer__ = true;
 
 	static DEFAULT_CAPACITY = 16;
 	static MAX_VARINT64_BYTES = 10;
@@ -40,17 +41,39 @@ export default class ByteBuffer {
 		return ByteBuffer.fromBinary(buffer, littleEndian);
 	}
 
+	static fromBase64(value, littleEndian) {
+		const binary = new TextEncoder().encode(atob(value)).buffer;
+
+		return ByteBuffer.fromBinary(binary, littleEndian);
+	}
+
+	static fromUTF8(value, littleEndian) {
+		const binary = new TextEncoder().encode(value).buffer;
+
+		return ByteBuffer.fromBinary(binary, littleEndian);
+	}
+
 	static wrap(value, encoding, littleEndian) {
 		if (typeof encoding !== 'string') throw new Error(`encoding must be of type string, got ${typeof encoding}`);
 
 		switch (encoding) {
+			case 'BIN':
+			case 'bin':
+			case 'BINARY':
 			case 'binary':
 				return ByteBuffer.fromBinary(value, littleEndian);
 
+			case 'HEX':
 			case 'hex':
 				return ByteBuffer.fromHex(value, littleEndian);
 
-			case '':
+			case 'BASE64':
+			case 'base64':
+				return ByteBuffer.fromBase64(value, littleEndian);
+
+			case 'UTF8':
+			case 'utf8':
+				return ByteBuffer.fromUTF8(value, littleEndian);
 
 			default:
 				throw new TypeError(`Unrecognized encoding type: ${encoding}`);
@@ -201,6 +224,4 @@ export default class ByteBuffer {
 		return bb;
 	}
 }
-
-ByteBuffer.prototype.__isByteBuffer__ = true;
 
