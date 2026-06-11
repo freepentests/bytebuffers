@@ -6,6 +6,8 @@ export default class UTF8String {
 
 	writeUTF8String(string) {
 		const stringContents = new TextEncoder().encode(string);
+		this.ensureCapacity(this.offset + stringContents.length);
+
 		stringContents.forEach(charCode => {
 			this.writeUint8(charCode);
 		});

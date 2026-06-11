@@ -1,5 +1,7 @@
 export default class Int64 {
 	writeInt64(number) {
+		this.ensureCapacity(this.offset + 8);
+
 		this.view.setBigInt64(this.offset, BigInt(number), this.littleEndian);
 		this.offset += 8;
 
@@ -7,6 +9,8 @@ export default class Int64 {
 	}
 
 	writeUint64(number) {
+		this.ensureCapacity(this.offset + 8);
+
 		this.view.setBigUint64(this.offset, BigInt(number), this.littleEndian);
 		this.offset += 8;
 

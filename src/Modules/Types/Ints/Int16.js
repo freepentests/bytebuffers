@@ -1,5 +1,7 @@
 export default class Int16 {
 	writeInt16(number) {
+		this.ensureCapacity(this.offset + 2);
+
 		this.view.setInt16(this.offset, number, this.littleEndian);
 		this.offset += 2;
 
@@ -7,6 +9,8 @@ export default class Int16 {
 	}
 
 	writeUint16(number) {
+		this.ensureCapacity(this.offset + 2);
+
 		this.view.setUint16(this.offset, number, this.littleEndian);
 		this.offset += 2;
 

@@ -9,7 +9,18 @@ export default class Varint {
 		return isEven ? (number / 2) : -(number + 1) / 2;
 	}
 
+	static calculateVarint(number) {
+		if (number < 1 << 7) return 1
+		else if (number < 1 << 14) return 2
+		else if (number < 1 << 21) return 3
+		else if (number < 1 << 28) return 4
+		else return 5
+	}
+
 	writeVarint(number) {
+		const size = Varint.calculateVarint(number);
+		this.ensureCapacity(this.offset + size);
+
 		if (number === 0) {
 			return (this.writeUint8(number), this);
 		}

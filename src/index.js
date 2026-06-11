@@ -8,7 +8,7 @@ import CString from './Modules/Types/Strings/CString.js';
 import IString from './Modules/Types/Strings/IString.js';
 import VString from './Modules/Types/Strings/VString.js'; 
 import UTF8String from './Modules/Types/Strings/UTF8String.js'; 
-import Varint from './Modules/Types/Varints/Varint.js'; 
+import Varint from './Modules/Types/Varints/Varint32.js'; 
 import Bytes from './Modules/Types/Bytes/Bytes.js';
 import BitSet from './Modules/Types/Bytes/BitSet.js';
 
@@ -208,7 +208,7 @@ export default class ByteBuffer {
 		this.#capacity = capacity;
 
 		const typedArray = new Uint8Array(new ArrayBuffer(this.#capacity));
-		typedArray.set(this.buffer);
+		typedArray.set(new Uint8Array(this.buffer));
 
 		this.buffer = typedArray.buffer;
 		this.view = new DataView(this.buffer);

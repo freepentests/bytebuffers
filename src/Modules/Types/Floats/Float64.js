@@ -1,5 +1,7 @@
 export default class Float64 {
 	writeFloat64(number) {
+		this.ensureCapacity(this.offset + 8);
+
 		this.view.setFloat64(this.offset, number, this.littleEndian);
 		this.offset += 8;
 

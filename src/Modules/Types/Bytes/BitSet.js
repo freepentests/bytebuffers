@@ -5,6 +5,8 @@ export default class BitSet {
 		const numBytes = bitSet.length / 8;
 		let bit = 0;
 
+		this.ensureCapacity(this.offset + 5 + numBytes);
+
 		for (let i = 0; i < numBytes; i++) {
 			const byte = (bitSet[bit++] & 1) |
 				(bitSet[bit++] & 1) << 1 |

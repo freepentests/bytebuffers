@@ -1,5 +1,7 @@
 export default class Int32 {
 	writeInt32(number) {
+		this.ensureCapacity(this.offset + 4);
+
 		this.view.setInt32(this.offset, number, this.littleEndian);
 		this.offset += 4;
 
@@ -7,6 +9,8 @@ export default class Int32 {
 	}
 
 	writeUint32(number) {
+		this.ensureCapacity(this.offset + 4);
+
 		this.view.setUint32(this.offset, number, this.littleEndian);
 		this.offset += 4;
 
