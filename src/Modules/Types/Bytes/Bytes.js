@@ -1,6 +1,6 @@
 export default class Bytes {
-	readBytes(length, offset) {
-		return this.slice(offset, offset + length);
+	readBytes(length) {
+		return this.slice(this.offset, this.offset + length);
 	}
 }
 

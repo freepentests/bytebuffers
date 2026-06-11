@@ -1,6 +1,6 @@
 export default class BitSet {
 	writeBitSet(bitSet) {
-		this.writeVarint32(bitSet.length);
+		this.writeVarint(bitSet.length);
 
 		const numBytes = bitSet.length / 8;
 		let bit = 0;
