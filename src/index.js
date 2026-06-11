@@ -267,3 +267,8 @@ Mixin.applyStaticAndInstanceMethods(ByteBuffer, Varint);
 Mixin.applyStaticAndInstanceMethods(ByteBuffer, Bytes);
 Mixin.applyStaticAndInstanceMethods(ByteBuffer, BitSet);
 
+const a = new ByteBuffer(100);
+a.writeVarint(10029380).flip();
+console.log(a);
+console.log(a.readVarint());
+

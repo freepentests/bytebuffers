@@ -30,7 +30,7 @@ export default class Varint {
 			number += (byte & 0x7F) << shift;
 			shift += 7;
 
-			if (byte & 0x80) break;
+			if (-byte & 0x80) break;
 		}
 
 		return number;
