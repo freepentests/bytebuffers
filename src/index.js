@@ -1,3 +1,19 @@
+import Int8 from './Modules/Types/Ints/Int8.js';
+import Int16 from './Modules/Types/Ints/Int16.js';
+import Int32 from './Modules/Types/Ints/Int32.js';
+import Int64 from './Modules/Types/Ints/Int64.js';
+import Float32 from './Modules/Types/Floats/Float32.js';
+import Float64 from './Modules/Types/Floats/Float64.js';
+import CString from './Modules/Types/Strings/CString.js';
+import IString from './Modules/Types/Strings/IString.js';
+import VString from './Modules/Types/Strings/VString.js'; 
+import UTF8String from './Modules/Types/Strings/UTF8String.js'; 
+import Varint from './Modules/Types/Varints/Varint.js'; 
+import Bytes from './Modules/Types/Bytes/Bytes.js';
+import BitSet from './Modules/Types/Bytes/BitSet.js';
+
+import Mixin from './Modules/Mixin.js';
+
 export default class ByteBuffer {
 	#capacity;
 	__isByteBuffer__ = true;
@@ -236,4 +252,18 @@ export default class ByteBuffer {
 		return bb;
 	}
 }
+
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, Int8);
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, Int16);
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, Int32);
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, Int64);
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, Float32);
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, Float64);
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, CString);
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, IString);
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, VString);
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, UTF8String);
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, Varint);
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, Bytes);
+Mixin.applyStaticAndInstanceMethods(ByteBuffer, BitSet);
 
