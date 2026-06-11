@@ -7,7 +7,7 @@ export default class IString {
 	}
 
 	readIString() {
-		const length = this.readUint32;
+		const length = this.readUint32();
 		return this.readUTF8String(length);
 	}
 }
