@@ -216,6 +216,11 @@ export default class ByteBuffer {
 		return this;
 	}
 
+	ensureCapacity(capacity) {
+		if (this.#capacity < capacity) return this.resize(this.#capacity * 2 > capacity ? this.#capacity * 2 : capacity);
+		return this;
+	}
+
 	reverse() {
 		const typedArray = new Uint8Array(this.buffer);
 		const newTypedArray = new Uint8Array(typedArray.length);
