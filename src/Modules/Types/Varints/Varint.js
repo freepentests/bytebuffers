@@ -10,7 +10,10 @@ export default class Varint {
 	}
 
 	writeVarint(number) {
-		// https://dev.to/lukaszwojcikdev/base128-algorithm-tool-for-encoding-and-decoding-text-data-34ld
+		if (number === 0) {
+			return (this.writeUint8(number), this);
+		}
+
 		while (number) {
 			let byte = number & 0x7F
 			number >>>= 7;
@@ -30,7 +33,7 @@ export default class Varint {
 			number += (byte & 0x7F) << shift;
 			shift += 7;
 
-			if (-byte & 0x80) break;
+			if (!(byte & 0x80)) break;
 		}
 
 		return number;
