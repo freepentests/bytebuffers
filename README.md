@@ -42,9 +42,9 @@ console.log(person.buffer);
 
 Todo list is sorted in descending order of importance/urgency.
 
-- [ ] Add `compact` method
-- [ ] Add support for reading strings and varints (and other data types whose read implementation have not been developed yet)
+- [x] Add support for reading strings and varints (and other data types whose read implementation have not been developed yet)
 - [ ] Add dynamic resizing
+- [ ] Add `compact` method
 - [ ] Add documentation (both JSDoc and markdown documentation)
 - [ ] Add more validation checks
 
