@@ -1,6 +1,6 @@
 export default class Float32 {
 	writeFloat32(number) {
-		this.float.setFloat32(this.offset, number, this.littleEndian);
+		this.view.setFloat32(this.offset, number, this.littleEndian);
 		this.offset += 4;
 
 		return this;
