@@ -18,7 +18,7 @@ export default class Int32 {
 	}
 
 	readInt32() {
-		const number = this.view.getInt32(this.offset++, this.littleEndian);
+		const number = this.view.getInt32(this.offset, this.littleEndian);
 		this.offset += 4;
 
 		return number;

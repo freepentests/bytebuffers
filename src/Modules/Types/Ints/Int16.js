@@ -18,7 +18,7 @@ export default class Int16 {
 	}
 
 	readInt16() {
-		const number = this.view.getInt16(this.offset++, this.littleEndian);
+		const number = this.view.getInt16(this.offset, this.littleEndian);
 		this.offset += 2;
 
 		return number;
