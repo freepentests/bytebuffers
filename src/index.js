@@ -111,10 +111,10 @@ export default class ByteBuffer {
 	constructor(capacity, littleEndian) {
 		this.#capacity = capacity ?? ByteBuffer.DEFAULT_CAPACITY;
 
-		this.limit = capacity ?? ByteBuffer.DEFAULT_CAPACITY;
+		this.limit = this.#capacity;
 		this.littleEndian = littleEndian ?? ByteBuffer.DEFAULT_ENDIAN;
 
-		this.buffer = new ArrayBuffer(capacity);
+		this.buffer = new ArrayBuffer(this.#capacity);
 		this.view = new DataView(this.buffer);
 
 		this.offset = 0;
@@ -255,6 +255,14 @@ export default class ByteBuffer {
 		bb.limit = end ?? this.limit;
 
 		return bb;
+	}
+
+	append(bytes) {
+		bytes.forEach(byte => {
+			this.writeUint8(byte);
+		});
+
+		return this;
 	}
 }
 
