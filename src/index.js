@@ -77,8 +77,12 @@ export default class ByteBuffer {
 		return ByteBuffer.fromBinary(binary, littleEndian);
 	}
 
-	static wrap(value, encoding, littleEndian) {
-		if (typeof encoding !== 'string') throw new Error(`encoding must be of type string, got ${typeof encoding}`);
+	static wrap(value, littleEndian, encoding) {
+		if (typeof encoding === 'undefined') {
+			if (typeof value === 'string') encoding = 'utf8';
+			else if (value instanceof Uint8Array || value instanceof Uint8ClampedArray || value instanceof Array || value instanceof ArrayBuffer) encoding = 'binary';
+			else throw new Error('Encoding type could not be inferred; please specify your desired encoding type in the function\'s arguments.');
+		}
 
 		switch (encoding) {
 			case 'BIN':
