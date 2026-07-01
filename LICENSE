@@ -1,0 +1,5 @@
+Copyright (C) freepentests
+
+The license is that you are prohibited to steal my code, and you are prohibited to incorporate my library into your projects. In other words, all rights reserved.
+
+If you want to implement ByteBuffer into your own programs, don't use my library, because using libraries is skidding. If you really want to incorporate ByteBuffer into your own programs, then write your own implementation, and use this library as a reference if you're stuck on something, but make sure you understand everything and do not copy and paste my code. Libraries are skidding.
